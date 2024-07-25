@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Text Extractor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 0;
+            margin: 0;
+            width: 700px;
+            height: 600px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background-color: #f1f1f1;
+            padding: 5px 10px;
+            box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        textarea {
+            flex-grow: 1;
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            resize: none;
+            border: none;
+            border-top: 1px solid #ccc;
+            overflow-y: auto;
+        }
+
+        button {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h2>Text Extractor</h2>
+        <div>
+            <button id="extractButton">
+                Extract
+            </button>
+            <button id="copyButton">
+                Copy
+            </button>
+        </div>
+    </div>
+    <textarea id="extractedText"></textarea>
+    <script src="popup.js"></script>
+</body>
+
+</html>
