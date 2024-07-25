@@ -24,6 +24,10 @@
             align-items: center;
         }
 
+        input {
+            width: 300px;
+        }
+
         textarea {
             flex-grow: 1;
             width: 100%;
@@ -46,6 +50,7 @@
     <div class="header">
         <h2>Text Extractor</h2>
         <div>
+            <input id="xPathInput" type="text" placeholder="Copy a XPath or full XPath of an element" />
             <button id="extractButton">
                 Extract
             </button>

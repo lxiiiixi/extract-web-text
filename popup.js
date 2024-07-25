@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const copyButton = document.getElementById('copyButton');
     const extractButton = document.getElementById('extractButton');
     const extractedText = document.getElementById('extractedText');
+    const xPathInput = document.getElementById('xPathInput');
+
 
     // Load saved text content from Chrome storage
     chrome.storage.local.get(['extractedText'], function (result) {
@@ -11,10 +13,13 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     extractButton.addEventListener('click', function () {
+        const xPathValue = xPathInput.value.trim();
+
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
             chrome.scripting.executeScript({
                 target: { tabId: tabs[0].id },
-                function: extractText
+                func: extractText,
+                args: [xPathValue]
             }, (results) => {
                 if (results && results[0] && results[0].result) {
                     const text = results[0].result;
@@ -41,12 +46,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
-
-
-function extractText() {
+function extractText(xPath) {
+    try {
+        if (xPath) {
+            const result = document.evaluate(xPath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
+            const element = result.singleNodeValue;
+            if (element) {
+                return element.innerText || element.textContent;
+            }
+        }
+    } catch (error) {
+        console.error('XPath evaluation error:', error);
+    }
     return document.body.innerText;
 }
-
 
 function saveTextContent(text) {
     chrome.storage.local.set({ extractedText: text }, function () {
